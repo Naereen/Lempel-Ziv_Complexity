@@ -4,7 +4,7 @@ This repository contains a small, simple and efficient implement of the [Lempel-
 
 ## Examples
 ### Simple usage
-If [`lempel_ziv_complexity.py`](lempel_ziv_complexity.py) is accessible in your PATH or in Python's path:
+If the [`lempel_ziv_complexity.py`](src/lempel_ziv_complexity.py) file is accessible in your PATH or in Python's path:
 
 ```python
 >>> from lempel_ziv_complexity import lempel_ziv_complexity
@@ -14,12 +14,14 @@ If [`lempel_ziv_complexity.py`](lempel_ziv_complexity.py) is accessible in your 
 ```
 
 ### With the C extension
-If the [`lempel_ziv_complexity.so`](lempel_ziv_complexity.pyx) is accessible in your PATH or in Python's path:
+If the [`lempel_ziv_complexity.so`](src/lempel_ziv_complexity.pyx) file is accessible in your PATH or in Python's path:
 
 
 ### Small benchmark
 There is also a Cython version, to have a faster implementation:
 ```python
+$ ipython
+...
 >>> s = '1001111011000010'
 >>> %timeit lempel_ziv_complexity(s)
 6.1 µs ± 33.6 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
@@ -29,7 +31,7 @@ There is also a Cython version, to have a faster implementation:
 The speedup is typically between ×50 and ×100.
 
 ## Demo on a [Jupyter notebook](https://www.Jupyter.org/)
-See this notebook: [on nbviewever](https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb).
+See this notebook: [on nbviewever](https://nbviewer.jupyter.org/github/Naereen/Lempel-Ziv_Complexity/blob/master/Short_study_of_the_Lempel-Ziv_complexity.ipynb).
 
 ----
 
