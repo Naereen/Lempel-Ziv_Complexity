@@ -3,3 +3,4 @@ build/
 *.c
 *.pyc
 __pycache__
+*.html
