@@ -11,7 +11,7 @@ __version__ = "0.1"
 
 from distutils.core import setup, Extension
 
-module1 = Extension('lempel_ziv_complexity_cython', sources=['lempel_ziv_complexity_cython.c'])
+module1 = Extension('lempel_ziv_complexity', sources=['lempel_ziv_complexity.c'])
 
 
 setup(name='Lempel-Ziv complexity',

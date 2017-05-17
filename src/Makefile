@@ -10,6 +10,8 @@ test:
 	python2 lempel_ziv_complexity.py
 	python3 lempel_ziv_complexity.py
 
+build: ccode build2 build3 buildpyx
+
 buildpyx: buildpyx3
 
 buildpyx2: lempel_ziv_complexity.pyx setup_cython.py
@@ -20,8 +22,6 @@ buildpyx3: lempel_ziv_complexity.pyx setup_cython.py
 
 ccode:
 	cython -v -3 lempel_ziv_complexity.pyx
-
-build: build2 build3 buildpyx
 
 build2: lempel_ziv_complexity.c setup_with_c.py
 	python2 setup_with_c.py build
@@ -37,12 +37,16 @@ install2:
 install3:
 	python3 setup_cython.py install
 
-clean: setup_with_c.py setup_with_c.py3 setup_cython.py
-	python2 setup_with_c.py clean
-	python3 setup_with_c.py3 clean
-	python3 setup_cython.py clean
+clean:
+	-python2 setup_with_c.py  clean
+	-python3 setup_with_c.py3 clean
+	-python3 setup_cython.py  clean
+	rm -vf lempel_ziv_complexity.c
 
-cleanall:
+cleancache:
+	rm -rfv __pycache__ *.pyc
+
+cleanall: clean cleancache
 	rm -rvf /tmp/Lempel-Ziv_Complexity/build/
 	mv -vf build /tmp/Lempel-Ziv_Complexity/
 
