@@ -4,6 +4,7 @@
 - How to use it? From Python, it's easy:
 
 >>> from lempel_ziv_complexity import lempel_ziv_complexity
+Info: numba.jit seems to be available.
 >>> s = '1001111011000010'
 >>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
 6
@@ -20,8 +21,8 @@ __version__ = "0.1"
 
 
 #: Configure the use of numba
-USE_NUMBA = True   # XXX Experimental
 USE_NUMBA = False
+USE_NUMBA = True   # XXX Experimental
 
 
 # DONE I tried numba.jit() on these functions, and it DOES not give any speedup...:-( sad sad !
@@ -100,3 +101,12 @@ def lempel_ziv_complexity(binary_sequence):
             else:
                 v = 1
     return complexity
+
+
+# --- Debugging
+
+if __name__ == "__main__":
+    # Code for debugging purposes.
+    from doctest import testmod
+    print("\nTesting automatically all the docstring written in each functions of this module :")
+    testmod(verbose=True)

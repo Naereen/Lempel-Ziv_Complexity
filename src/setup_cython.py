@@ -16,5 +16,5 @@ from Cython.Build import cythonize
 setup(name='Lempel-Ziv complexity',
       version='0.1',
       description='Fast implementation of the Lempel-Ziv complexity function',
-      ext_modules=cythonize('lempel_ziv_complexity_cython.pyx')
+      ext_modules=cythonize('lempel_ziv_complexity.pyx')
       )

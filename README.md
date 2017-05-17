@@ -14,7 +14,7 @@ If [`lempel_ziv_complexity.py`](lempel_ziv_complexity.py) is accessible in your 
 ```
 
 ### With the C extension
-If [`lempel_ziv_complexity.so`](lempel_ziv_complexity.py) is accessible in your PATH or in Python's path:
+If the [`lempel_ziv_complexity.so`](lempel_ziv_complexity.pyx) is accessible in your PATH or in Python's path:
 
 
 ### Small benchmark
@@ -26,6 +26,7 @@ There is also a Cython version, to have a faster implementation:
 >>> %timeit lempel_ziv_complexity_cython(s)
 132 ns ± 2.55 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
 ```
+The speedup is typically between ×50 and ×100.
 
 ## Demo on a [Jupyter notebook](https://www.Jupyter.org/)
 See this notebook: [on nbviewever](https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb).
@@ -35,12 +36,16 @@ See this notebook: [on nbviewever](https://Nbviewer.Jupyter.org/github/Naereen/L
 ## Install and build
 ### Manually ?
 Easy!
+
+Clone this repository, go in the folder, compile, test, and if it works, install it.
+
 ```bash
 cd /tmp/
 git clone https://GitHub.com/Naereen/Lempel-Ziv_Complexity
-cd Lempel-Ziv_Complexity
-make
-# mv the build/lib*/*.so files where you need them
+cd Lempel-Ziv_Complexity/src/
+make build
+make test     # should pass
+make install  # mv the build/lib*/*.so files where you need them
 ```
 
 Be sure to include the dynamic library when you need it, or in a folder accessible by your Python interpreter (somewhere in `sys.path`).
