@@ -72,7 +72,7 @@ Python v2.7+ or Python v3.1+.
 - [Cython](http://cython.org/) is *needed* to build the C extension (faster).
 
 ### :scroll: License ? [![GitHub license](https://img.shields.io/github/license/Naereen/Lempel-Ziv_Complexity.svg)](https://github.com/Naereen/badges/blob/master/LICENSE)
-[MIT Licensed](https://lbesson.mit-license.org/) (file [LICENSE.txt](LICENSE.txt)).
+[MIT Licensed](https://lbesson.mit-license.org/) (file [LICENSE](LICENSE)).
 © [Lilian Besson](https://GitHub.com/Naereen), 2017.
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/Lempel-Ziv_Complexity/graphs/commit-activity)
