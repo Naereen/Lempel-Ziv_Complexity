@@ -1,4 +1,4 @@
-# %%cython
+# -*- coding: utf-8 -*-
 """Lempel-Ziv complexity for a binary sequence, in simple Cython code (C extension).
 
 - How to build it? Simply use the file :download:`Makefile` provided in this folder.
@@ -11,6 +11,9 @@
 6
 
 - Requirements: you need to have [Cython](http://Cython.org/) installed, and use [CPython](https://www.Python.org/).
+
+- MIT Licensed, (C) 2017 Lilian Besson (Naereen)
+  https://GitHub.com/Naereen/Lempel-Ziv_Complexity
 """
 
 __author__ = "Lilian Besson"
@@ -50,7 +53,7 @@ def lempel_ziv_complexity(str binary_sequence):
     8
 
     - Note: it is faster to give the sequence as a string of characters, like `'10001001'`, instead of a list or a numpy array.
-    - Note: see this notebook for more details, comparison, benchmarks and experiments: http://banditslilian.gforge.inria.fr/notebooks/Short_study_of_the_Lempel-Ziv_complexity.html
+    - Note: see this notebook for more details, comparison, benchmarks and experiments: https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb
     - Note: there is also a naive Python version, for speedup, see :download:`lempel_ziv_complexity.py`.
     """
     cdef DTYPE_t u = 0

@@ -8,11 +8,10 @@
 >>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
 6
 
-- From others folders:
-
->>> from LempelZiv import lempel_ziv_complexity
-
 - Note: there is also a Cython-powered version, for speedup, see :download:`lempel_ziv_complexity_cython.pyx`.
+
+- MIT Licensed, (C) 2017 Lilian Besson (Naereen)
+  https://GitHub.com/Naereen/Lempel-Ziv_Complexity
 """
 from __future__ import print_function
 
@@ -72,7 +71,7 @@ def lempel_ziv_complexity(binary_sequence):
     8
 
     - Note: it is faster to give the sequence as a string of characters, like `'10001001'`, instead of a list or a numpy array.
-    - Note: see this notebook for more details, comparison, benchmarks and experiments: http://banditslilian.gforge.inria.fr/notebooks/Short_study_of_the_Lempel-Ziv_complexity.html
+    - Note: see this notebook for more details, comparison, benchmarks and experiments: https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb
     - Note: there is also a Cython-powered version, for speedup, see :download:`lempel_ziv_complexity_cython.pyx`.
     """
     u, v, w = 0, 1, 1

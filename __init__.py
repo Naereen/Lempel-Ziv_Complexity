@@ -11,6 +11,9 @@
 6.1 µs ± 33.6 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 >>> %timeit lempel_ziv_complexity_cython(s)
 132 ns ± 2.55 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
+
+- MIT Licensed, (C) 2017 Lilian Besson (Naereen)
+  https://GitHub.com/Naereen/Lempel-Ziv_Complexity
 """
 
 __author__ = "Lilian Besson"

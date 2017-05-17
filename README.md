@@ -1,29 +1,70 @@
 # Python implementation of Lempel-Ziv Complexity
 
-[![lempel_ziv_complexity in pypi](https://img.shields.io/pypi/v/lempel_ziv_complexity.svg)](https://pypi.python.org/pypi/lempel_ziv_complexity)
+This repository contains a small, simple and efficient implement of the [Lempel-Ziv complexity](https://en.wikipedia.org/wiki/Lempel-Ziv_complexity) algorithm.
 
-## Build
-Easy!
-```bash
-make
+## Examples
+### Simple usage
+If [`lempel_ziv_complexity.py`](lempel_ziv_complexity.py) is accessible in your PATH or in Python's path:
+
+```python
+>>> from lempel_ziv_complexity import lempel_ziv_complexity
+>>> s = '1001111011000010'
+>>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
+6
 ```
 
-## Author?
-[Lilian Besson](https://bitbucket.org/lbesson/).
+### With the C extension
+If [`lempel_ziv_complexity.so`](lempel_ziv_complexity.py) is accessible in your PATH or in Python's path:
 
-## Language?
-Python v2.7+ or Python v3.1+.
 
-- [Cython](http://cython.org/) is needed to build the C extension (faster),
-- [Numba](http://numba.pydata.org/) can be used to speed up the pure Python version.
+### Small benchmark
+There is also a Cython version, to have a faster implementation:
+```python
+>>> s = '1001111011000010'
+>>> %timeit lempel_ziv_complexity(s)
+6.1 µs ± 33.6 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+>>> %timeit lempel_ziv_complexity_cython(s)
+132 ns ± 2.55 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
+```
 
-This project is hosted on [the Pypi package repository](<https://pypi.python.org/pypi/lempel_ziv_complexity> "Pypi !").
+## Demo on a [Jupyter notebook](https://www.Jupyter.org/)
+See this notebook: [on nbviewever](https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb).
 
+----
+
+## Install and build
+### Manually ?
+Easy!
+```bash
+cd /tmp/
+git clone https://GitHub.com/Naereen/Lempel-Ziv_Complexity
+cd Lempel-Ziv_Complexity
+make
+# mv the build/lib*/*.so files where you need them
+```
+
+Be sure to include the dynamic library when you need it, or in a folder accessible by your Python interpreter (somewhere in `sys.path`).
+The file is `lempel_ziv_complexity_cython.so` (for Python 2) or the `lempel_ziv_complexity_cython.cpython-35m-x86_64-linux-gnu.so` (for Python 3.5, or higher, adapt the name).
+
+## With pip ?
+> Not yet.
+
+This project will soon be hosted on [the Pypi package repository](https://pypi.python.org/pypi/lempel_ziv_complexity).
+
+[![lempel_ziv_complexity in pypi](https://img.shields.io/pypi/v/lempel_ziv_complexity.svg)](https://pypi.python.org/pypi/lempel_ziv_complexity)
 ![PyPI implementation](https://img.shields.io/pypi/implementation/lempel_ziv_complexity.svg)
 ![PyPI pyversions](https://img.shields.io/pypi/pyversions/lempel_ziv_complexity.svg)
 
+----
 
-## :scroll: License ? [![GitHub license](https://img.shields.io/github/license/Naereen/Lempel-Ziv_Complexity.svg)](https://github.com/Naereen/badges/blob/master/LICENSE)
+## About
+### Language?
+Python v2.7+ or Python v3.1+.
+
+- [Numba](http://numba.pydata.org/) can be used to speed up the pure Python version.
+- [Cython](http://cython.org/) is *needed* to build the C extension (faster).
+
+### :scroll: License ? [![GitHub license](https://img.shields.io/github/license/Naereen/Lempel-Ziv_Complexity.svg)](https://github.com/Naereen/badges/blob/master/LICENSE)
 [MIT Licensed](https://lbesson.mit-license.org/) (file [LICENSE.txt](LICENSE.txt)).
 © [Lilian Besson](https://GitHub.com/Naereen), 2017.
 

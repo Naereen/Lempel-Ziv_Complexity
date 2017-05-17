@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-""" Utility for building the C library for Python 3."""
+""" Utility for building the C library for Python 3.
+
+- MIT Licensed, (C) 2017 Lilian Besson (Naereen)
+  https://GitHub.com/Naereen/Lempel-Ziv_Complexity
+"""
 
 __author__ = "Lilian Besson"
-__version__ = "0.6"
+__version__ = "0.1"
 
 from distutils.core import setup, Extension
 
