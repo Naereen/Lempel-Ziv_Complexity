@@ -7,6 +7,10 @@ send:	send_zamok
 send_zamok:
 	CP ./ ${Szam}publis/Lempel-Ziv_Complexity.git/
 
+doc:
+	pdoc --overwrite --html --html-dir ./doc/ ./src/lempel_ziv_complexity.py
+	mv ./doc/lempel_ziv_complexity.m.html ./doc/index.html
+
 CONTENT_IPYNB=$(wildcard *.ipynb */*.ipynb)
 CONTENT_HTML=$(CONTENT_IPYNB:.ipynb=.html)
 

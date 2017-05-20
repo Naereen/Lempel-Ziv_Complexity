@@ -1123,7 +1123,7 @@ lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
 <span class="c1">#: Configure the use of numba</span>
 <span class="n">USE_NUMBA</span> <span class="o">=</span> <span class="bp">False</span>
 <span class="n">USE_NUMBA</span> <span class="o">=</span> <span class="bp">True</span>   <span class="c1"># XXX Experimental</span>
-
+<span class="sd">&#39;&#39;&#39;By default, use @numba.jit if it is available.&#39;&#39;&#39;</span>
 
 <span class="c1"># DONE I tried numba.jit() on these functions, and it DOES not give any speedup...:-( sad sad !</span>
 <span class="k">try</span><span class="p">:</span>
@@ -1222,6 +1222,7 @@ lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
       <p id="lempel_ziv_complexity.USE_NUMBA" class="name">var <span class="ident">USE_NUMBA</span></p>
       
   
+    <div class="desc"><p>By default, use @numba.jit if it is available.</p></div>
   <div class="source_cont">
 </div>
 

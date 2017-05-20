@@ -23,7 +23,7 @@ __version__ = "0.1"
 #: Configure the use of numba
 USE_NUMBA = False
 USE_NUMBA = True   # XXX Experimental
-
+'''By default, use @numba.jit if it is available.'''
 
 # DONE I tried numba.jit() on these functions, and it DOES not give any speedup...:-( sad sad !
 try:
