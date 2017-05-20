@@ -13,6 +13,9 @@ If the [`lempel_ziv_complexity.py`](src/lempel_ziv_complexity.py) file is access
 6
 ```
 
+### Documentation
+See [this file](https://naereen.github.io/Lempel-Ziv_Complexity/doc/index.html).
+
 ### With the C extension
 If the [`lempel_ziv_complexity.so`](src/lempel_ziv_complexity.pyx) file is accessible in your PATH or in Python's path:
 
