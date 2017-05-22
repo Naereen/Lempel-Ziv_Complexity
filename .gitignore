@@ -4,3 +4,4 @@ build/
 *.pyc
 __pycache__
 *.html
+.ipynb_checkpoints/
