@@ -85,7 +85,7 @@ Python 3.5, or higher, adapt the name).
 With pip ?
 ----------
 
-This project is hosted on `the Pypi package repository <https://pypi.org/project/lempel_ziv_complexity>`__.
+This project is hosted on `the Pypi package repository <https://pypi.org/project/Lempel-Ziv_Complexity/>`__.
 
 
 .. code:: bash
@@ -134,7 +134,7 @@ Besson <https://GitHub.com/Naereen>`__, 2017.
 |ForTheBadge built-with-science|
 
 .. |PyPI version| image:: https://img.shields.io/pypi/v/lempel_ziv_complexity.svg
-   :target: https://pypi.org/project/lempel_ziv_complexity
+   :target: https://pypi.org/project/Lempel-Ziv_Complexity/
 .. |PyPI implementation| image:: https://img.shields.io/pypi/implementation/lempel_ziv_complexity.svg
 .. |PyPI pyversions| image:: https://img.shields.io/pypi/pyversions/lempel_ziv_complexity.svg
 .. |GitHub license| image:: https://img.shields.io/github/license/Naereen/Lempel-Ziv_Complexity.svg

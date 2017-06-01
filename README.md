@@ -57,7 +57,7 @@ Be sure to include the dynamic library when you need it, or in a folder accessib
 The file is `lempel_ziv_complexity_cython.so` (for Python 2) or the `lempel_ziv_complexity_cython.cpython-35m-x86_64-linux-gnu.so` (for Python 3.5, or higher, adapt the name).
 
 ## With pip ?
-This project is hosted on [the Pypi package repository](https://pypi.org/projects/lempel_ziv_complexity).
+This project is hosted on [the Pypi package repository](https://pypi.org/project/Lempel-Ziv_Complexity/).
 
 ```bash
 sudo pip install lempel_ziv_complexity
@@ -65,7 +65,7 @@ sudo pip install lempel_ziv_complexity
 python -m lempel_ziv_complexity
 ```
 
-[![lempel_ziv_complexity in pypi](https://img.shields.io/pypi/v/lempel_ziv_complexity.svg)](https://pypi.org/projects/lempel_ziv_complexity)
+[![lempel_ziv_complexity in pypi](https://img.shields.io/pypi/v/lempel_ziv_complexity.svg)](https://pypi.org/project/Lempel-Ziv_Complexity/)
 ![PyPI implementation](https://img.shields.io/pypi/implementation/lempel_ziv_complexity.svg)
 ![PyPI pyversions](https://img.shields.io/pypi/pyversions/lempel_ziv_complexity.svg)
 
