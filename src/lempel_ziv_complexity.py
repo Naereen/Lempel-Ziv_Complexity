@@ -16,7 +16,7 @@ Info: numba.jit seems to be available.
 """
 from __future__ import print_function
 
-__author__ = "Lilian Besson"
+__author__ = "Lilian Besson (Naereen)"
 __version__ = "0.1"
 
 

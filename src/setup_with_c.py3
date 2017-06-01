@@ -6,7 +6,7 @@
   https://GitHub.com/Naereen/Lempel-Ziv_Complexity
 """
 
-__author__ = "Lilian Besson"
+__author__ = "Lilian Besson (Naereen)"
 __version__ = "0.1"
 
 from distutils.core import setup, Extension
