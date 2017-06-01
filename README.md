@@ -62,7 +62,7 @@ This project is hosted on [the Pypi package repository](https://pypi.org/project
 ```bash
 sudo pip install lempel_ziv_complexity
 # test it
-python -m lempel_ziv_complexity
+python -c "from lempel_ziv_complexity import lempel_ziv_complexity; print(lempel_ziv_complexity('1001111011000010') == 6)"  # test
 ```
 
 [![lempel_ziv_complexity in pypi](https://img.shields.io/pypi/v/lempel_ziv_complexity.svg)](https://pypi.org/project/Lempel-Ziv_Complexity/)
