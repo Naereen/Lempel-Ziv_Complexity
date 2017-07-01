@@ -71,6 +71,15 @@ python -c "from lempel_ziv_complexity import lempel_ziv_complexity; print(lempel
 
 ----
 
+## Julia implementation ?
+[I was curious](https://github.com/Naereen/Lempel-Ziv_Complexity/issues/1) and wanted to write the same algorithm in [Julia](http://julialang.org).
+Here it is: [lempel_ziv_complexity.jl](https://github.com/Naereen/Lempel-Ziv_Complexity/blob/master/src/lempel_ziv_complexity.jl).
+See [this part of the notebook](https://nbviewer.jupyter.org/github/Naereen/notebooks/blob/master/Short_study_of_the_Lempel-Ziv_complexity.ipynb#%28Experimental%29-Julia-implementation) for a benchmark between Julia and Python.
+
+> I still don't know much about Julia, so for now, I won't publish this tiny package as a Julia package. I will, though!
+
+----
+
 ## About
 ### Language?
 Python v2.7+ or Python v3.1+.
