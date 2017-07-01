@@ -16,6 +16,8 @@ If the [`lempel_ziv_complexity.py`](src/lempel_ziv_complexity.py) file is access
 ### Documentation
 See [this file](https://naereen.github.io/Lempel-Ziv_Complexity/doc/index.html).
 
+> If you are really interested about the details of how the algorithm works, please see [this GIF screencast](https://github.com/Naereen/Lempel-Ziv_Complexity/issues/2#issuecomment-312421968) from [PythonTutor.com](http://pythontutor.com/visualize.html#mode=edit).
+
 ### With the C extension
 If the [`lempel_ziv_complexity.so`](src/lempel_ziv_complexity.pyx) file is accessible in your PATH or in Python's path:
 
@@ -76,7 +78,7 @@ python -c "from lempel_ziv_complexity import lempel_ziv_complexity; print(lempel
 Here it is: [lempel_ziv_complexity.jl](https://github.com/Naereen/Lempel-Ziv_Complexity/blob/master/src/lempel_ziv_complexity.jl).
 See [this part of the notebook](https://nbviewer.jupyter.org/github/Naereen/notebooks/blob/master/Short_study_of_the_Lempel-Ziv_complexity.ipynb#%28Experimental%29-Julia-implementation) for a benchmark between Julia and Python.
 
-> I still don't know much about Julia, so for now, I won't publish this tiny package as a Julia package. I will, though!
+> I still don't know much about Julia, so for now, I won't publish this tiny package as a Julia package. [I will, though!](https://github.com/Naereen/Lempel-Ziv_Complexity/issues/3)
 
 ----
 
