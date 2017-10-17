@@ -1,6 +1,6 @@
 # Python implementation of Lempel-Ziv Complexity
 
-This repository contains a small, simple and efficient implement of the [Lempel-Ziv complexity](https://en.wikipedia.org/wiki/Lempel-Ziv_complexity) algorithm.
+This repository contains a small, simple and efficient implementation of the [Lempel-Ziv complexity](https://en.wikipedia.org/wiki/Lempel-Ziv_complexity) algorithm.
 
 ## Examples
 ### Simple usage
@@ -36,7 +36,7 @@ $ ipython
 The speedup is typically between ×50 and ×100.
 
 ## Demo on a [Jupyter notebook](https://www.Jupyter.org/)
-See this notebook: [on nbviewever](https://nbviewer.jupyter.org/github/Naereen/Lempel-Ziv_Complexity/blob/master/Short_study_of_the_Lempel-Ziv_complexity.ipynb).
+See this notebook: [on nbviewever](https://nbviewer.jupyter.org/github/Naereen/Lempel-Ziv_Complexity/blob/master/Short_study_of_the_Lempel-Ziv_complexity.ipynb), which also compares with the [Julia version](https://github.com/Naereen/LempelZiv.jl).
 
 ----
 
@@ -78,7 +78,8 @@ python -c "from lempel_ziv_complexity import lempel_ziv_complexity; print(lempel
 Here it is: [lempel_ziv_complexity.jl](https://github.com/Naereen/Lempel-Ziv_Complexity/blob/master/src/lempel_ziv_complexity.jl).
 See [this part of the notebook](https://nbviewer.jupyter.org/github/Naereen/notebooks/blob/master/Short_study_of_the_Lempel-Ziv_complexity.ipynb#%28Experimental%29-Julia-implementation) for a benchmark between Julia and Python.
 
-> I still don't know much about Julia, so for now, I won't publish this tiny package as a Julia package. [I will, though!](https://github.com/Naereen/Lempel-Ziv_Complexity/issues/3)
+The Julia package is published here: [Naereen/LempelZiv.jl](https://github.com/Naereen/LempelZiv.jl),
+and see [here for its documentation](https://naereen.github.io/LempelZiv.jl/doc/index.html).
 
 ----
 
