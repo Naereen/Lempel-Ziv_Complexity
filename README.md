@@ -18,6 +18,8 @@ See [this file](https://naereen.github.io/Lempel-Ziv_Complexity/doc/index.html).
 
 > If you are really interested about the details of how the algorithm works, please see [this GIF screencast](https://github.com/Naereen/Lempel-Ziv_Complexity/issues/2#issuecomment-312421968) from [PythonTutor.com](http://pythontutor.com/visualize.html#mode=edit).
 
+- Reference: [this short lecture note by Peter Shor (Oct.2005)](https://math.mit.edu/~shor/PAM/lempel_ziv_notes.pdf).
+
 ### With the C extension
 If the [`lempel_ziv_complexity.so`](src/lempel_ziv_complexity.pyx) file is accessible in your PATH or in Python's path:
 
