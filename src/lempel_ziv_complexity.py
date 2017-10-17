@@ -92,7 +92,7 @@ def lempel_ziv_complexity(binary_sequence):
             if u == w:
                 complexity += 1
                 w += v_max
-                if w > length:
+                if w >= length:
                     break
                 else:
                     u = 0
