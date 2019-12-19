@@ -33,6 +33,9 @@ setup(name='lempel_ziv_complexity',
       long_description=long_description,
       license='OSI Approved :: MIT License',
       url="https://github.com/Naereen/Lempel-Ziv_Complexity",
+      packages=[
+          "lempel_ziv_complexity"
+      ],
       classifiers=[
           'Intended Audience :: Science/Research',
           'License :: OSI Approved :: MIT License',
@@ -43,5 +46,10 @@ setup(name='lempel_ziv_complexity',
           'Topic :: Scientific/Engineering :: Mathematics',
           'Development Status :: 4 - Beta',
           'Natural Language :: English',
-      ]
+      ],
+      project_urls={  # Optional
+          "Bug Reports": "https://github.com/Naereen/Lempel-Ziv_Complexity/issues",
+          "Source":      "https://github.com/Naereen/Lempel-Ziv_Complexity/tree/master/",
+          "Documentation": "https://smpybandits.github.io/",
+      },
       )

@@ -1042,18 +1042,12 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#lempel_ziv_complexity.USE_NUMBA">USE_NUMBA</a></li>
-  </ul>
-
-    </li>
 
     <li class="set"><h3><a href="#header-functions">Functions</a></h3>
       
   <ul>
     <li class="mono"><a href="#lempel_ziv_complexity.lempel_ziv_complexity">lempel_ziv_complexity</a></li>
+    <li class="mono"><a href="#lempel_ziv_complexity.lempel_ziv_decomposition">lempel_ziv_decomposition</a></li>
   </ul>
 
     </li>
@@ -1081,8 +1075,8 @@ table {
 <p>from lempel_ziv_complexity import lempel_ziv_complexity
 Info: numba.jit seems to be available.
 s = '1001111011000010'
-lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
-6</p>
+lempel_ziv_complexity(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010
+8</p>
 </blockquote>
 </blockquote>
 </blockquote>
@@ -1091,7 +1085,7 @@ lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
 <p>Note: there is also a Cython-powered version, for speedup, see :download:<code>lempel_ziv_complexity_cython.pyx</code>.</p>
 </li>
 <li>
-<p>MIT Licensed, (C) 2017 Lilian Besson (Naereen)
+<p>MIT Licensed, (C) 2017-2019 Lilian Besson (Naereen)
   https://GitHub.com/Naereen/Lempel-Ziv_Complexity</p>
 </li>
 </ul>
@@ -1106,101 +1100,116 @@ lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
 <span class="sd">&gt;&gt;&gt; from lempel_ziv_complexity import lempel_ziv_complexity</span>
 <span class="sd">Info: numba.jit seems to be available.</span>
 <span class="sd">&gt;&gt;&gt; s = &#39;1001111011000010&#39;</span>
-<span class="sd">&gt;&gt;&gt; lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010</span>
-<span class="sd">6</span>
+<span class="sd">&gt;&gt;&gt; lempel_ziv_complexity(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010</span>
+<span class="sd">8</span>
 
 <span class="sd">- Note: there is also a Cython-powered version, for speedup, see :download:`lempel_ziv_complexity_cython.pyx`.</span>
 
-<span class="sd">- MIT Licensed, (C) 2017 Lilian Besson (Naereen)</span>
+<span class="sd">- MIT Licensed, (C) 2017-2019 Lilian Besson (Naereen)</span>
 <span class="sd">  https://GitHub.com/Naereen/Lempel-Ziv_Complexity</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Lilian Besson&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.1&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Lilian Besson (Naereen)&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.2&quot;</span>
 
 
-<span class="c1">#: Configure the use of numba</span>
-<span class="n">USE_NUMBA</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">USE_NUMBA</span> <span class="o">=</span> <span class="bp">True</span>   <span class="c1"># XXX Experimental</span>
-<span class="sd">&#39;&#39;&#39;By default, use @numba.jit if it is available.&#39;&#39;&#39;</span>
-
-<span class="c1"># DONE I tried numba.jit() on these functions, and it DOES not give any speedup...:-( sad sad !</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">numba.decorators</span> <span class="kn">import</span> <span class="n">jit</span>
-    <span class="c1"># from numba.decorators import jit as numbajit</span>
-    <span class="kn">import</span> <span class="nn">locale</span>  <span class="c1"># See this bug, http://numba.pydata.org/numba-doc/dev/user/faq.html#llvm-locale-bug</span>
-    <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_NUMERIC</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Info: numba.jit seems to be available.&quot;</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Warning: numba.jit seems to not be available. Using a dummy decorator for numba.jit() ...&quot;</span><span class="p">)</span>
-
-    <span class="n">USE_NUMBA</span> <span class="o">=</span> <span class="bp">False</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">USE_NUMBA</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Warning: numba.jit seems to be disabled. Using a dummy decorator for numba.jit() ...&quot;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">jit</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Fake numba.jit decorator.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">f</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 
 
-<span class="c1"># Can be numba, can be not numba, depending on USE_NUMBA</span>
-<span class="c1"># @jit</span>
-<span class="k">def</span> <span class="nf">lempel_ziv_complexity</span><span class="p">(</span><span class="n">binary_sequence</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Manual implementation of the Lempel-Ziv complexity.</span>
+<span class="k">def</span> <span class="nf">lempel_ziv_decomposition</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; Manual implementation of the Lempel-Ziv decomposition.</span>
 
 <span class="sd">    It is defined as the number of different substrings encountered as the stream is viewed from begining to the end.</span>
 <span class="sd">    As an example:</span>
 
 <span class="sd">    &gt;&gt;&gt; s = &#39;1001111011000010&#39;</span>
-<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010</span>
-<span class="sd">    6</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_decomposition(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010</span>
+<span class="sd">    [&#39;1&#39;, &#39;0&#39;, &#39;01&#39;, &#39;11&#39;, &#39;10&#39;, &#39;110&#39;, &#39;00&#39;, &#39;010&#39;]</span>
 
-<span class="sd">    Marking in the different substrings the sequence complexity :math:`\mathrm{Lempel-Ziv}(s) = 6`: :math:`s = 1 / 0 / 01 / 1110 / 1100 / 0010`.</span>
+<span class="sd">    Marking in the different substrings the sequence complexity :math:`\mathrm{Lempel-Ziv}(s) = 8`: :math:`s = 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010`.</span>
 
 <span class="sd">    - See the page https://en.wikipedia.org/wiki/Lempel-Ziv_complexity for more details.</span>
 
 
 <span class="sd">    Other examples:</span>
 
-<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;1010101010101010&#39;)  # 1 / 0 / 10</span>
-<span class="sd">    3</span>
-<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;1001111011000010000010&#39;)  # 1 / 0 / 01 / 1110 / 1100 / 0010 / 000 / 010</span>
-<span class="sd">    7</span>
-<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;100111101100001000001010&#39;)  # 1 / 0 / 01 / 1110 / 1100 / 0010 / 000 / 010 / 10</span>
-<span class="sd">    8</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_decomposition(&#39;1010101010101010&#39;)</span>
+<span class="sd">    [&#39;1&#39;, &#39;0&#39;, &#39;10&#39;, &#39;101&#39;, &#39;01&#39;, &#39;010&#39;, &#39;1010&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_decomposition(&#39;1001111011000010000010&#39;)</span>
+<span class="sd">    [&#39;1&#39;, &#39;0&#39;, &#39;01&#39;, &#39;11&#39;, &#39;10&#39;, &#39;110&#39;, &#39;00&#39;, &#39;010&#39;, &#39;000&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_decomposition(&#39;100111101100001000001010&#39;)</span>
+<span class="sd">    [&#39;1&#39;, &#39;0&#39;, &#39;01&#39;, &#39;11&#39;, &#39;10&#39;, &#39;110&#39;, &#39;00&#39;, &#39;010&#39;, &#39;000&#39;, &#39;0101&#39;]</span>
 
 <span class="sd">    - Note: it is faster to give the sequence as a string of characters, like `&#39;10001001&#39;`, instead of a list or a numpy array.</span>
 <span class="sd">    - Note: see this notebook for more details, comparison, benchmarks and experiments: https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb</span>
 <span class="sd">    - Note: there is also a Cython-powered version, for speedup, see :download:`lempel_ziv_complexity_cython.pyx`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
-    <span class="n">v_max</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_sequence</span><span class="p">)</span>
-    <span class="n">complexity</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">sub_strings</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+
+    <span class="n">ind</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">binary_sequence</span><span class="p">[</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">binary_sequence</span><span class="p">[</span><span class="n">w</span> <span class="o">+</span> <span class="n">v</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
-            <span class="n">v</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">if</span> <span class="n">w</span> <span class="o">+</span> <span class="n">v</span> <span class="o">&gt;=</span> <span class="n">length</span><span class="p">:</span>
-                <span class="n">complexity</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">ind</span> <span class="o">+</span> <span class="n">inc</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">sub_str</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">[</span><span class="n">ind</span> <span class="p">:</span> <span class="n">ind</span> <span class="o">+</span> <span class="n">inc</span><span class="p">]</span>
+        <span class="c1"># print(sub_str, ind, inc)</span>
+        <span class="k">if</span> <span class="n">sub_str</span> <span class="ow">in</span> <span class="n">sub_strings</span><span class="p">:</span>
+            <span class="n">inc</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">v_max</span><span class="p">:</span>
-                <span class="n">v_max</span> <span class="o">=</span> <span class="n">v</span>
-            <span class="n">u</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">if</span> <span class="n">u</span> <span class="o">==</span> <span class="n">w</span><span class="p">:</span>
-                <span class="n">complexity</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">w</span> <span class="o">+=</span> <span class="n">v_max</span>
-                <span class="k">if</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="n">length</span><span class="p">:</span>
-                    <span class="k">break</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">u</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span>
-                    <span class="n">v_max</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">complexity</span>
+            <span class="n">sub_strings</span><span class="p">[</span><span class="n">sub_str</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">ind</span> <span class="o">+=</span> <span class="n">inc</span>
+            <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="c1"># print(&quot;Adding&quot;, sub_str)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">sub_strings</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">lempel_ziv_complexity</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; Manual implementation of the Lempel-Ziv complexity.</span>
+
+<span class="sd">    It is defined as the number of different substrings encountered as the stream is viewed from begining to the end.</span>
+<span class="sd">    As an example:</span>
+
+<span class="sd">    &gt;&gt;&gt; s = &#39;1001111011000010&#39;</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010</span>
+<span class="sd">    8</span>
+
+<span class="sd">    Marking in the different substrings the sequence complexity :math:`\mathrm{Lempel-Ziv}(s) = 8`: :math:`s = 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010`.</span>
+
+<span class="sd">    - See the page https://en.wikipedia.org/wiki/Lempel-Ziv_complexity for more details.</span>
+
+
+<span class="sd">    Other examples:</span>
+
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;1010101010101010&#39;)  # 1, 0, 10, 101, 01, 010, 1010</span>
+<span class="sd">    7</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;1001111011000010000010&#39;)  # 1, 0, 01, 11, 10, 110, 00, 010, 000</span>
+<span class="sd">    9</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;100111101100001000001010&#39;)  # 1, 0, 01, 11, 10, 110, 00, 010, 000, 0101</span>
+<span class="sd">    10</span>
+
+<span class="sd">    - Note: it is faster to give the sequence as a string of characters, like `&#39;10001001&#39;`, instead of a list or a numpy array.</span>
+<span class="sd">    - Note: see this notebook for more details, comparison, benchmarks and experiments: https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb</span>
+<span class="sd">    - Note: there is also a Cython-powered version, for speedup, see :download:`lempel_ziv_complexity_cython.pyx`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sub_strings</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+
+    <span class="n">ind</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ind</span> <span class="o">+</span> <span class="n">inc</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">sub_str</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">[</span><span class="n">ind</span> <span class="p">:</span> <span class="n">ind</span> <span class="o">+</span> <span class="n">inc</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">sub_str</span> <span class="ow">in</span> <span class="n">sub_strings</span><span class="p">:</span>
+            <span class="n">inc</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sub_strings</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sub_str</span><span class="p">)</span>
+            <span class="n">ind</span> <span class="o">+=</span> <span class="n">inc</span>
+            <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_strings</span><span class="p">)</span>
+
 
 
 <span class="c1"># --- Debugging</span>
@@ -1217,22 +1226,12 @@ lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="lempel_ziv_complexity.USE_NUMBA" class="name">var <span class="ident">USE_NUMBA</span></p>
-      
-  
-    <div class="desc"><p>By default, use @numba.jit if it is available.</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
     <div class="name def" id="lempel_ziv_complexity.lempel_ziv_complexity">
-    <p>def <span class="ident">lempel_ziv_complexity</span>(</p><p>binary_sequence)</p>
+    <p>def <span class="ident">lempel_ziv_complexity</span>(</p><p>sequence)</p>
     </div>
     
 
@@ -1245,12 +1244,12 @@ As an example:</p>
 <blockquote>
 <blockquote>
 <p>s = '1001111011000010'
-lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
-6</p>
+lempel_ziv_complexity(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010
+8</p>
 </blockquote>
 </blockquote>
 </blockquote>
-<p>Marking in the different substrings the sequence complexity :math:<code>\mathrm{Lempel-Ziv}(s) = 6</code>: :math:<code>s = 1 / 0 / 01 / 1110 / 1100 / 0010</code>.</p>
+<p>Marking in the different substrings the sequence complexity :math:<code>\mathrm{Lempel-Ziv}(s) = 8</code>: :math:<code>s = 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010</code>.</p>
 <ul>
 <li>See the page https://en.wikipedia.org/wiki/Lempel-Ziv_complexity for more details.</li>
 </ul>
@@ -1258,12 +1257,12 @@ lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
 <blockquote>
 <blockquote>
 <blockquote>
-<p>lempel_ziv_complexity('1010101010101010')  # 1 / 0 / 10
-3
-lempel_ziv_complexity('1001111011000010000010')  # 1 / 0 / 01 / 1110 / 1100 / 0010 / 000 / 010
+<p>lempel_ziv_complexity('1010101010101010')  # 1, 0, 10, 101, 01, 010, 1010
 7
-lempel_ziv_complexity('100111101100001000001010')  # 1 / 0 / 01 / 1110 / 1100 / 0010 / 000 / 010 / 10
-8</p>
+lempel_ziv_complexity('1001111011000010000010')  # 1, 0, 01, 11, 10, 110, 00, 010, 000
+9
+lempel_ziv_complexity('100111101100001000001010')  # 1, 0, 01, 11, 10, 110, 00, 010, 000, 0101
+10</p>
 </blockquote>
 </blockquote>
 </blockquote>
@@ -1275,60 +1274,149 @@ lempel_ziv_complexity('100111101100001000001010')  # 1 / 0 / 01 / 1110 / 1100 / 
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-lempel_ziv_complexity.lempel_ziv_complexity', this);">Show source &equiv;</a></p>
   <div id="source-lempel_ziv_complexity.lempel_ziv_complexity" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lempel_ziv_complexity</span><span class="p">(</span><span class="n">binary_sequence</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Manual implementation of the Lempel-Ziv complexity.</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lempel_ziv_complexity</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; Manual implementation of the Lempel-Ziv complexity.</span>
 
 <span class="sd">    It is defined as the number of different substrings encountered as the stream is viewed from begining to the end.</span>
 <span class="sd">    As an example:</span>
 
 <span class="sd">    &gt;&gt;&gt; s = &#39;1001111011000010&#39;</span>
-<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010</span>
-<span class="sd">    6</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010</span>
+<span class="sd">    8</span>
 
-<span class="sd">    Marking in the different substrings the sequence complexity :math:`\mathrm{Lempel-Ziv}(s) = 6`: :math:`s = 1 / 0 / 01 / 1110 / 1100 / 0010`.</span>
+<span class="sd">    Marking in the different substrings the sequence complexity :math:`\mathrm{Lempel-Ziv}(s) = 8`: :math:`s = 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010`.</span>
 
 <span class="sd">    - See the page https://en.wikipedia.org/wiki/Lempel-Ziv_complexity for more details.</span>
 
 
 <span class="sd">    Other examples:</span>
 
-<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;1010101010101010&#39;)  # 1 / 0 / 10</span>
-<span class="sd">    3</span>
-<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;1001111011000010000010&#39;)  # 1 / 0 / 01 / 1110 / 1100 / 0010 / 000 / 010</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;1010101010101010&#39;)  # 1, 0, 10, 101, 01, 010, 1010</span>
 <span class="sd">    7</span>
-<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;100111101100001000001010&#39;)  # 1 / 0 / 01 / 1110 / 1100 / 0010 / 000 / 010 / 10</span>
-<span class="sd">    8</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;1001111011000010000010&#39;)  # 1, 0, 01, 11, 10, 110, 00, 010, 000</span>
+<span class="sd">    9</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_complexity(&#39;100111101100001000001010&#39;)  # 1, 0, 01, 11, 10, 110, 00, 010, 000, 0101</span>
+<span class="sd">    10</span>
 
 <span class="sd">    - Note: it is faster to give the sequence as a string of characters, like `&#39;10001001&#39;`, instead of a list or a numpy array.</span>
 <span class="sd">    - Note: see this notebook for more details, comparison, benchmarks and experiments: https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb</span>
 <span class="sd">    - Note: there is also a Cython-powered version, for speedup, see :download:`lempel_ziv_complexity_cython.pyx`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
-    <span class="n">v_max</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_sequence</span><span class="p">)</span>
-    <span class="n">complexity</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">sub_strings</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+
+    <span class="n">ind</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">binary_sequence</span><span class="p">[</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">binary_sequence</span><span class="p">[</span><span class="n">w</span> <span class="o">+</span> <span class="n">v</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
-            <span class="n">v</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">if</span> <span class="n">w</span> <span class="o">+</span> <span class="n">v</span> <span class="o">&gt;=</span> <span class="n">length</span><span class="p">:</span>
-                <span class="n">complexity</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">ind</span> <span class="o">+</span> <span class="n">inc</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">sub_str</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">[</span><span class="n">ind</span> <span class="p">:</span> <span class="n">ind</span> <span class="o">+</span> <span class="n">inc</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">sub_str</span> <span class="ow">in</span> <span class="n">sub_strings</span><span class="p">:</span>
+            <span class="n">inc</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">v_max</span><span class="p">:</span>
-                <span class="n">v_max</span> <span class="o">=</span> <span class="n">v</span>
-            <span class="n">u</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">if</span> <span class="n">u</span> <span class="o">==</span> <span class="n">w</span><span class="p">:</span>
-                <span class="n">complexity</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">w</span> <span class="o">+=</span> <span class="n">v_max</span>
-                <span class="k">if</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="n">length</span><span class="p">:</span>
-                    <span class="k">break</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">u</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span>
-                    <span class="n">v_max</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">complexity</span>
+            <span class="n">sub_strings</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sub_str</span><span class="p">)</span>
+            <span class="n">ind</span> <span class="o">+=</span> <span class="n">inc</span>
+            <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_strings</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="lempel_ziv_complexity.lempel_ziv_decomposition">
+    <p>def <span class="ident">lempel_ziv_decomposition</span>(</p><p>sequence)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Manual implementation of the Lempel-Ziv decomposition.</p>
+<p>It is defined as the number of different substrings encountered as the stream is viewed from begining to the end.
+As an example:</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>s = '1001111011000010'
+lempel_ziv_decomposition(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010
+['1', '0', '01', '11', '10', '110', '00', '010']</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>Marking in the different substrings the sequence complexity :math:<code>\mathrm{Lempel-Ziv}(s) = 8</code>: :math:<code>s = 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010</code>.</p>
+<ul>
+<li>See the page https://en.wikipedia.org/wiki/Lempel-Ziv_complexity for more details.</li>
+</ul>
+<p>Other examples:</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>lempel_ziv_decomposition('1010101010101010')
+['1', '0', '10', '101', '01', '010', '1010']
+lempel_ziv_decomposition('1001111011000010000010')
+['1', '0', '01', '11', '10', '110', '00', '010', '000']
+lempel_ziv_decomposition('100111101100001000001010')
+['1', '0', '01', '11', '10', '110', '00', '010', '000', '0101']</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>Note: it is faster to give the sequence as a string of characters, like <code>'10001001'</code>, instead of a list or a numpy array.</li>
+<li>Note: see this notebook for more details, comparison, benchmarks and experiments: https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb</li>
+<li>Note: there is also a Cython-powered version, for speedup, see :download:<code>lempel_ziv_complexity_cython.pyx</code>.</li>
+</ul></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-lempel_ziv_complexity.lempel_ziv_decomposition', this);">Show source &equiv;</a></p>
+  <div id="source-lempel_ziv_complexity.lempel_ziv_decomposition" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lempel_ziv_decomposition</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; Manual implementation of the Lempel-Ziv decomposition.</span>
+
+<span class="sd">    It is defined as the number of different substrings encountered as the stream is viewed from begining to the end.</span>
+<span class="sd">    As an example:</span>
+
+<span class="sd">    &gt;&gt;&gt; s = &#39;1001111011000010&#39;</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_decomposition(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010</span>
+<span class="sd">    [&#39;1&#39;, &#39;0&#39;, &#39;01&#39;, &#39;11&#39;, &#39;10&#39;, &#39;110&#39;, &#39;00&#39;, &#39;010&#39;]</span>
+
+<span class="sd">    Marking in the different substrings the sequence complexity :math:`\mathrm{Lempel-Ziv}(s) = 8`: :math:`s = 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010`.</span>
+
+<span class="sd">    - See the page https://en.wikipedia.org/wiki/Lempel-Ziv_complexity for more details.</span>
+
+
+<span class="sd">    Other examples:</span>
+
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_decomposition(&#39;1010101010101010&#39;)</span>
+<span class="sd">    [&#39;1&#39;, &#39;0&#39;, &#39;10&#39;, &#39;101&#39;, &#39;01&#39;, &#39;010&#39;, &#39;1010&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_decomposition(&#39;1001111011000010000010&#39;)</span>
+<span class="sd">    [&#39;1&#39;, &#39;0&#39;, &#39;01&#39;, &#39;11&#39;, &#39;10&#39;, &#39;110&#39;, &#39;00&#39;, &#39;010&#39;, &#39;000&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; lempel_ziv_decomposition(&#39;100111101100001000001010&#39;)</span>
+<span class="sd">    [&#39;1&#39;, &#39;0&#39;, &#39;01&#39;, &#39;11&#39;, &#39;10&#39;, &#39;110&#39;, &#39;00&#39;, &#39;010&#39;, &#39;000&#39;, &#39;0101&#39;]</span>
+
+<span class="sd">    - Note: it is faster to give the sequence as a string of characters, like `&#39;10001001&#39;`, instead of a list or a numpy array.</span>
+<span class="sd">    - Note: see this notebook for more details, comparison, benchmarks and experiments: https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb</span>
+<span class="sd">    - Note: there is also a Cython-powered version, for speedup, see :download:`lempel_ziv_complexity_cython.pyx`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sub_strings</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+
+    <span class="n">ind</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ind</span> <span class="o">+</span> <span class="n">inc</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">sub_str</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">[</span><span class="n">ind</span> <span class="p">:</span> <span class="n">ind</span> <span class="o">+</span> <span class="n">inc</span><span class="p">]</span>
+        <span class="c1"># print(sub_str, ind, inc)</span>
+        <span class="k">if</span> <span class="n">sub_str</span> <span class="ow">in</span> <span class="n">sub_strings</span><span class="p">:</span>
+            <span class="n">inc</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sub_strings</span><span class="p">[</span><span class="n">sub_str</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">ind</span> <span class="o">+=</span> <span class="n">inc</span>
+            <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="c1"># print(&quot;Adding&quot;, sub_str)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">sub_strings</span><span class="p">)</span>
 </pre></div>
 
   </div>
