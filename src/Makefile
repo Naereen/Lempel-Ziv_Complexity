@@ -6,8 +6,10 @@
 
 all: clean test build install clean
 
-test:
+test:	test2 test3
+test2:
 	python2 lempel_ziv_complexity.py
+test3:
 	python3 lempel_ziv_complexity.py
 
 build: ccode build2 build3 buildpyx
@@ -55,6 +57,31 @@ open:
 
 cow:
 	cowsay "Go to https://github.com/Naereen/ for more fun stuff"
+
+# --------------------------------------------------------
+# Build and upload to PyPI
+build_for_pypi:	clean_pypi_build sdist wheel
+
+test_twine:
+	twine upload --sign --repository testpypi dist/*.whl
+twine:
+	twine upload --sign --repository pypi dist/*.whl
+
+clean_pypi_build:
+	-mv -vf dist/* /tmp/
+sdist:	sdist.zip sdist.tar.gz
+sdist.zip:
+	python3 setup.py sdist --formats=zip
+	# -gpg --detach-sign -a dist/*.zip
+	-ls -larth dist/*.zip
+sdist.tar.gz:
+	python3 setup.py sdist --formats=gztar
+	# -gpg --detach-sign -a dist/*.tar.gz
+	-ls -larth dist/*.tar.gz
+wheel:
+	python3 setup.py bdist_wheel --universal
+	# -gpg --detach-sign -a dist/*.whl
+	-ls -larth dist/*.whl
 
 # copyso:
 # 	-\cp build/lib*/lempel_ziv_complexity*.* ../

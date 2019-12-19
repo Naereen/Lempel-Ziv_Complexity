@@ -7,17 +7,17 @@
 
 >>> from lempel_ziv_complexity_cython import lempel_ziv_complexity
 >>> s = '1001111011000010'
->>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
-6
+>>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010
+8
 
 - Requirements: you need to have [Cython](http://Cython.org/) installed, and use [CPython](https://www.Python.org/).
 
-- MIT Licensed, (C) 2017 Lilian Besson (Naereen)
+- MIT Licensed, (C) 2017-2019 Lilian Besson (Naereen)
   https://GitHub.com/Naereen/Lempel-Ziv_Complexity
 """
 
 __author__ = "Lilian Besson"
-__version__ = "0.1"
+__version__ = "0.2"
 
 
 import cython
@@ -28,60 +28,47 @@ ctypedef unsigned int DTYPE_t
 
 # turn off bounds-checking for entire function, quicker but less safe
 @cython.boundscheck(False)
-def lempel_ziv_complexity(str binary_sequence):
+def lempel_ziv_complexity(str sequence):
     """Lempel-Ziv complexity for a binary sequence, in simple Cython code (C extension).
 
     It is defined as the number of different substrings encountered as the stream is viewed from begining to the end.
     As an example:
 
     >>> s = '1001111011000010'
-    >>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
-    6
+    >>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010
+    8
 
-    Marking in the different substrings the sequence complexity :math:`\mathrm{Lempel-Ziv}(s) = 6`: :math:`s = 1 / 0 / 01 / 1110 / 1100 / 0010`.
+    Marking in the different substrings the sequence complexity :math:`\mathrm{Lempel-Ziv}(s) = 8`: :math:`s = 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010`.
 
     - See the page https://en.wikipedia.org/wiki/Lempel-Ziv_complexity for more details.
 
 
     Other examples:
 
-    >>> lempel_ziv_complexity('1010101010101010')  # 1 / 0 / 10
-    3
-    >>> lempel_ziv_complexity('1001111011000010000010')  # 1 / 0 / 01 / 1110 / 1100 / 0010 / 000 / 010
+    >>> lempel_ziv_complexity('1010101010101010')  # 1, 0, 10, 101, 01, 010, 1010
     7
-    >>> lempel_ziv_complexity('100111101100001000001010')  # 1 / 0 / 01 / 1110 / 1100 / 0010 / 000 / 010 / 10
-    8
+    >>> lempel_ziv_complexity('1001111011000010000010')  # 1, 0, 01, 11, 10, 110, 00, 010, 000
+    9
+    >>> lempel_ziv_complexity('100111101100001000001010')  # 1, 0, 01, 11, 10, 110, 00, 010, 000, 0101
+    10
 
     - Note: it is faster to give the sequence as a string of characters, like `'10001001'`, instead of a list or a numpy array.
     - Note: see this notebook for more details, comparison, benchmarks and experiments: https://Nbviewer.Jupyter.org/github/Naereen/Lempel-Ziv_Complexity/Short_study_of_the_Lempel-Ziv_complexity.ipynb
     - Note: there is also a naive Python version, for speedup, see :download:`lempel_ziv_complexity.py`.
     """
-    cdef DTYPE_t u = 0
-    cdef DTYPE_t v = 1
-    cdef DTYPE_t w = 1
-    cdef DTYPE_t v_max = 1
-    cdef DTYPE_t length = len(binary_sequence)
-    cdef DTYPE_t complexity = 1
-    # that was the only needed part, typing statically all the variables
+    cdef set sub_strings = set()
+    cdef str sub_str = ""
+    cdef DTYPE_t n = len(sequence)
+    cdef DTYPE_t ind = 0
+    cdef DTYPE_t inc = 1
     while True:
-        if binary_sequence[u + v - 1] == binary_sequence[w + v - 1]:
-            v += 1
-            if w + v >= length:
-                complexity += 1
-                break
+        if ind + inc > len(sequence):
+            break
+        sub_str = sequence[ind : ind + inc]
+        if sub_str in sub_strings:
+            inc += 1
         else:
-            if v > v_max:
-                v_max = v
-            u += 1
-            if u == w:
-                complexity += 1
-                w += v_max
-                if w > length:
-                    break
-                else:
-                    u = 0
-                    v = 1
-                    v_max = 1
-            else:
-                v = 1
-    return complexity
+            sub_strings.add(sub_str)
+            ind += inc
+            inc = 1
+    return len(sub_strings)

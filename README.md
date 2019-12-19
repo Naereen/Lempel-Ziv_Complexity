@@ -9,8 +9,8 @@ If the [`lempel_ziv_complexity.py`](src/lempel_ziv_complexity.py) file is access
 ```python
 >>> from lempel_ziv_complexity import lempel_ziv_complexity
 >>> s = '1001111011000010'
->>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
-6
+>>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010
+8
 ```
 
 ### Documentation
@@ -66,7 +66,7 @@ This project is hosted on [the Pypi package repository](https://pypi.org/project
 ```bash
 sudo pip install lempel_ziv_complexity
 # test it
-python -c "from lempel_ziv_complexity import lempel_ziv_complexity; print(lempel_ziv_complexity('1001111011000010') == 6)"  # test
+python -c "from lempel_ziv_complexity import lempel_ziv_complexity; print(lempel_ziv_complexity('1001111011000010') == 8)"  # test
 ```
 
 [![lempel_ziv_complexity in pypi](https://img.shields.io/pypi/v/lempel_ziv_complexity.svg)](https://pypi.org/project/Lempel-Ziv_Complexity/)
@@ -94,7 +94,7 @@ Python v2.7+ or Python v3.1+.
 
 ### :scroll: License ? [![GitHub license](https://img.shields.io/github/license/Naereen/Lempel-Ziv_Complexity.svg)](https://github.com/Naereen/badges/blob/master/LICENSE)
 [MIT Licensed](https://lbesson.mit-license.org/) (file [LICENSE](LICENSE)).
-© [Lilian Besson](https://GitHub.com/Naereen), 2017.
+© [Lilian Besson](https://GitHub.com/Naereen), 2017-2019.
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/Lempel-Ziv_Complexity/graphs/commit-activity)
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/Naereen/ama)

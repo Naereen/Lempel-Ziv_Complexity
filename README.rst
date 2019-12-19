@@ -15,8 +15,8 @@ If the `lempel_ziv_complexity.py <https://github.com/Naereen/Lempel-Ziv_Complexi
 
     >>> from lempel_ziv_complexity import lempel_ziv_complexity
     >>> s = '1001111011000010'
-    >>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 1110 / 1100 / 0010
-    6
+    >>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010
+    8
 
 
 Documentation
