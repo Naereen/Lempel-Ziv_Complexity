@@ -4,7 +4,6 @@
 - How to use it? From Python, it's easy:
 
 >>> from lempel_ziv_complexity import lempel_ziv_complexity
-Info: numba.jit seems to be available.
 >>> s = '1001111011000010'
 >>> lempel_ziv_complexity(s)  # 1 / 0 / 01 / 11 / 10 / 110 / 00 / 010
 8
@@ -17,7 +16,7 @@ Info: numba.jit seems to be available.
 from __future__ import print_function
 
 __author__ = "Lilian Besson (Naereen)"
-__version__ = "0.2"
+__version__ = "0.2.2"
 
 
 from collections import OrderedDict

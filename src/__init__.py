@@ -17,6 +17,6 @@
 """
 
 __author__ = "Lilian Besson"
-__version__ = "0.2"
+__version__ = "0.2.2"
 
-from .lempel_ziv_complexity import lempel_ziv_complexity
+from .lempel_ziv_complexity import lempel_ziv_decomposition, lempel_ziv_complexity

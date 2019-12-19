@@ -6,3 +6,4 @@ __pycache__
 *.html
 .ipynb_checkpoints/
 src/dist/
+*.egg-info
